@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — SettleMod</title>
+<meta name="description" content="The terms that govern use of SettleMod.">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+<link rel="shortcut icon" href="/static/favicon.ico">
+<style>
+  :root {
+    --font: 'Palatino Linotype', 'Book Antiqua', Palatino, 'URW Palladio L', 'Palatino LT STD', Georgia, serif;
+    --paper: #EDEBE2;
+    --paper-raised: #F5F3EA;
+    --ink: #1F2421;
+    --ink-soft: #4A4F49;
+    --ledger-green: #1B4D3E;
+    --cta-green: #2D7DA6;
+    --cta-green-hover: #205C7C;
+    --stamp-red: #A13D2C;
+    --rule: #C9C2AE;
+    --rule-strong: #A9A18A;
+    --radius-md: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(31,36,33,0.16) 1px, transparent 0) 0 0/4px 4px,
+      radial-gradient(circle at 3px 3px, rgba(31,36,33,0.10) 1.2px, transparent 0) 0 0/7px 7px,
+      var(--paper);
+    color: var(--ink);
+    font-family: var(--font);
+    line-height: 1.65;
+  }
+  a { color: var(--cta-green); }
+  a:hover { color: var(--cta-green-hover); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-weight: bold; font-size: 18px; text-decoration: none; color: var(--ink); }
+  .back-link { font-size: 14px; text-decoration: none; }
+
+  main { padding: 48px 0 64px; }
+  h1 { font-size: 30px; margin: 0 0 6px; }
+  .updated { color: var(--ink-soft); font-size: 13px; font-style: italic; margin: 0 0 36px; }
+  h2 {
+    font-size: 18px;
+    margin: 36px 0 10px;
+    color: var(--ledger-green);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .box {
+    background: var(--paper-raised);
+    border: 1px solid var(--stamp-red);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin: 0 0 14px;
+  }
+  .box strong { color: var(--stamp-red); }
+
+  footer {
+    padding: 32px 0 56px;
+    text-align: center;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  footer a { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/">SettleMod</a>
+    <a class="back-link" href="/">← Back to site</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated August 26, 2026</p>
+
+    <p>These terms govern your use of SettleMod, a tool that converts PayPal transaction exports into a CSV file formatted for QuickBooks Online import. By using SettleMod, you agree to them.</p>
+
+    <div class="box">
+      <strong>Not affiliated with PayPal or Intuit.</strong> SettleMod is an independent, third-party utility. It is not endorsed by, certified by, or affiliated with PayPal, Inc. or Intuit Inc., and "PayPal" and "QuickBooks" are trademarks of their respective owners, used here only to describe compatibility.
+    </div>
+
+    <h2>What the service does</h2>
+    <p>You upload a CSV export of your PayPal transaction history; SettleMod reformats it into a CSV file structured for QuickBooks Online's import tool. You are responsible for reviewing the converted file — including account names, categories, and amounts — before importing it into your books. SettleMod is a formatting tool, not accounting or tax advice.</p>
+
+    <h2>Accuracy and liability</h2>
+    <p>We built SettleMod carefully and test it against real PayPal export formats, but PayPal's export format can change without notice, and every account's transaction history has its own quirks. The converted file is provided "as is," without warranty of any kind. SettleMod is not liable for any loss, discrepancy, or financial consequence arising from use of the converted output — always review your books before relying on them, the way you would with any bookkeeping tool.</p>
+
+    <h2>Your account and email verification</h2>
+    <p>SettleMod identifies accounts by email address rather than a password. You must verify control of an email address (via a one-time code) before converting files, checking a balance, or making a purchase under that address. You're responsible for using an email address you actually control, and for the activity that happens under it.</p>
+
+    <h2>Credits, plans, and payment</h2>
+    <p>SettleMod offers a free trial conversion, one-time credit purchases, and a monthly unlimited subscription. Payments are processed by Stripe; by purchasing, you also agree to <a href="https://stripe.com/legal/consumer-terms" target="_blank" rel="noopener">Stripe's terms</a> as they apply to the transaction. Purchased credits do not expire unless stated otherwise at checkout. To cancel a monthly subscription, email <a href="mailto:support@settlemod.app">support@settlemod.app</a>; cancellation takes effect at the end of the current billing period. Refund requests are considered on a case-by-case basis — contact support and we'll work it out.</p>
+
+    <h2>Acceptable use</h2>
+    <p>Please don't:</p>
+    <ul>
+      <li>Attempt to bypass or automate around email verification or rate limits,</li>
+      <li>Use the service to process files that aren't yours or that you're not authorized to handle,</li>
+      <li>Attempt to access, probe, or disrupt the systems behind SettleMod, or</li>
+      <li>Use the service for any unlawful purpose.</li>
+    </ul>
+    <p>We may suspend or terminate access for accounts that violate these terms.</p>
+
+    <h2>Availability</h2>
+    <p>SettleMod is provided on a best-effort basis. We don't guarantee uninterrupted availability and aren't liable for downtime, though we'll do our best to keep things running and to fix problems promptly.</p>
+
+    <h2>Changes to these terms</h2>
+    <p>We may update these terms as the service evolves. If we make a material change, we'll update the date at the top of this page. Continuing to use SettleMod after a change means you accept the updated terms.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about these terms: <a href="mailto:support@settlemod.app">support@settlemod.app</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>SettleMod — <a href="/">Home</a> · <a href="/privacy">Privacy Policy</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

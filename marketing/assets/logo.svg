@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100" width="420" height="100">
+  <defs>
+    <linearGradient id="folderFrontRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B3226"/>
+      <stop offset="100%" stop-color="#6B2318"/>
+    </linearGradient>
+    <linearGradient id="folderFrontBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1F5A78"/>
+      <stop offset="100%" stop-color="#14425A"/>
+    </linearGradient>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <g transform="translate(2,29) scale(1.38)" filter="url(#softShadow)">
+    <path d="M2,12 L2,24 L28,24 L28,13 L13,13 L10,10 L2,10 Z" fill="url(#folderFrontRed)" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(58,29) scale(1.38)" filter="url(#softShadow)">
+    <path d="M2,12 L2,24 L28,24 L28,13 L13,13 L10,10 L2,10 Z" fill="url(#folderFrontBlue)" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+  </g>
+  <path d="M42,55 L52,55" stroke="#8B3226" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+  <path d="M52,51 L58,55 L52,59" stroke="#8B3226" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <text x="112" y="46" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="30" font-weight="700" fill="#1F2421">File</text>
+  <text x="164" y="46" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="30" font-weight="700" fill="#1B4D3E">Mod</text>
+  <text x="113" y="68" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-style="italic" font-size="13" font-weight="500" fill="#4A4F49">Ready to import</text>
+</svg>

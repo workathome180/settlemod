@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — SettleMod</title>
+<meta name="description" content="How SettleMod collects, uses, and protects your data.">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+<link rel="shortcut icon" href="/static/favicon.ico">
+<style>
+  :root {
+    --font: 'Palatino Linotype', 'Book Antiqua', Palatino, 'URW Palladio L', 'Palatino LT STD', Georgia, serif;
+    --paper: #EDEBE2;
+    --paper-raised: #F5F3EA;
+    --ink: #1F2421;
+    --ink-soft: #4A4F49;
+    --ledger-green: #1B4D3E;
+    --cta-green: #2D7DA6;
+    --cta-green-hover: #205C7C;
+    --stamp-red: #A13D2C;
+    --rule: #C9C2AE;
+    --rule-strong: #A9A18A;
+    --radius-md: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(31,36,33,0.16) 1px, transparent 0) 0 0/4px 4px,
+      radial-gradient(circle at 3px 3px, rgba(31,36,33,0.10) 1.2px, transparent 0) 0 0/7px 7px,
+      var(--paper);
+    color: var(--ink);
+    font-family: var(--font);
+    line-height: 1.65;
+  }
+  a { color: var(--cta-green); }
+  a:hover { color: var(--cta-green-hover); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-weight: bold; font-size: 18px; text-decoration: none; color: var(--ink); }
+  .back-link { font-size: 14px; text-decoration: none; }
+
+  main { padding: 48px 0 64px; }
+  h1 { font-size: 30px; margin: 0 0 6px; }
+  .updated { color: var(--ink-soft); font-size: 13px; font-style: italic; margin: 0 0 36px; }
+  h2 {
+    font-size: 18px;
+    margin: 36px 0 10px;
+    color: var(--ledger-green);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .box {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin: 0 0 14px;
+  }
+  code { background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 5px; font-size: 0.92em; }
+
+  footer {
+    padding: 32px 0 56px;
+    text-align: center;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  footer a { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/">SettleMod</a>
+    <a class="back-link" href="/">← Back to site</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated August 26, 2026</p>
+
+    <p>SettleMod ("we," "us") converts PayPal transaction exports into a CSV format QuickBooks Online can import. This page explains what data the app collects, why, and what we do — and don't do — with it.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li><strong>Your email address.</strong> Required to use the converter. We use it to send a one-time verification code, track your remaining credits or subscription status, and send purchase receipts.</li>
+      <li><strong>The CSV file you upload.</strong> It's read into memory, converted, and the result is sent back to you in the same request. By default the original file is not saved anywhere.</li>
+      <li><strong>Your original file, only if you check "Keep a copy."</strong> This is off by default. If you turn it on, we keep your original PayPal export so that, if something about the conversion looks wrong, there's a copy to compare against. See "Keeping a copy of your original file" below.</li>
+      <li><strong>Payment information — but not by us.</strong> Purchases are handled entirely by Stripe. We never see or store your card number; we only receive confirmation that a payment succeeded, tied to your email.</li>
+      <li><strong>Basic server logs.</strong> Like any web server, ours briefly notes IP addresses and request timestamps, used only to prevent abuse (for example, rate-limiting repeated verification attempts) and to troubleshoot errors.</li>
+    </ul>
+
+    <div class="box">
+      <strong>What we don't do:</strong> no cookies, no third-party analytics, no advertising or ad tracking, no selling or renting your data to anyone.
+    </div>
+
+    <h2>Why we require email verification</h2>
+    <p>Before SettleMod added a verification step, anyone could type in any email address and act as that person — using their free trial, spending their credits, or (if the "keep a copy" option were used) causing a file to be associated with an email that wasn't theirs. Requiring a confirmed 6-digit code closes that gap: it proves you actually control the inbox behind the email you're using.</p>
+
+    <h2>Keeping a copy of your original file (opt-in)</h2>
+    <p>If you check "Keep a copy of my original file" before converting, your original PayPal export is stored on our server, organized by your verified email address. It is:</p>
+    <ul>
+      <li>Never publicly accessible — there is no URL or page that serves these files, and they aren't linked from anywhere in the app.</li>
+      <li>Stored with restricted file permissions so only the application itself can read it.</li>
+      <li>Kept so that, if you're unsure a conversion came out right, we can look at what you originally uploaded.</li>
+    </ul>
+    <p>You can ask us to delete a stored original at any time — see "Your choices" below.</p>
+
+    <h2>How we share data</h2>
+    <p>We don't sell or share your email or files for marketing purposes, ever. Data only passes to two outside parties, each solely to run the service:</p>
+    <ul>
+      <li><strong>Stripe</strong>, to process payments. See <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe's privacy policy</a>.</li>
+      <li><strong>Our email delivery provider</strong>, solely to send you the verification code and receipts.</li>
+    </ul>
+    <p>We may disclose information if required by law, or to protect against fraud or abuse of the service.</p>
+
+    <h2>How long we keep data</h2>
+    <p>Your email and credit balance are kept for as long as your account is active, so you don't lose a balance you've paid for. Uploaded files that you did <em>not</em> ask us to keep are discarded immediately after conversion. Original files you opted to keep are retained until you ask us to delete them or your account is closed.</p>
+
+    <h2>Your choices</h2>
+    <p>You can ask us, at any time, to:</p>
+    <ul>
+      <li>Delete a stored original file (or all of them),</li>
+      <li>Tell you what data we hold on your email address, or</li>
+      <li>Delete your account and associated data entirely.</li>
+    </ul>
+    <p>Reach us at <a href="mailto:privacy@settlemod.app">privacy@settlemod.app</a> to make any of these requests.</p>
+
+    <h2>Children's privacy</h2>
+    <p>SettleMod is a bookkeeping utility intended for business and professional use. It is not directed at children, and we do not knowingly collect data from anyone under 16.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>If this policy changes in a meaningful way, we'll update the date at the top of this page. Continued use of SettleMod after a change means you accept the updated policy.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy or your data: <a href="mailto:privacy@settlemod.app">privacy@settlemod.app</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>SettleMod — <a href="/">Home</a> · <a href="/terms">Terms of Service</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

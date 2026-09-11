@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SettleMod — Turn PayPal exports into QuickBooks-ready imports</title>
+<meta name="description" content="Convert PayPal transaction exports into the exact CSV format QuickBooks Online accepts. No remapping, no rejected uploads.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiNFREVCRTIiLz4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZm9sZGVyRnJvbnRSZWQiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzhCMzIyNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2QjIzMTgiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImZvbGRlckZyb250Qmx1ZSIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMUY1QTc4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE0NDI1QSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9InNvZnRTaGFkb3ciIHg9Ii01MCUiIHk9Ii01MCUiIHdpZHRoPSIyMDAlIiBoZWlnaHQ9IjIwMCUiPgogICAgICA8ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMS41IiBzdGREZXZpYXRpb249IjEuNSIgZmxvb2QtY29sb3I9IiMwMDAiIGZsb29kLW9wYWNpdHk9IjAuMjUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyLDI5KSBzY2FsZSgxLjM4KSIgZmlsdGVyPSJ1cmwoI3NvZnRTaGFkb3cpIj4KICAgIDxwYXRoIGQ9Ik0yLDEyIEwyLDI0IEwyOCwyNCBMMjgsMTMgTDEzLDEzIEwxMCwxMCBMMiwxMCBaIiBmaWxsPSJ1cmwoI2ZvbGRlckZyb250UmVkKSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8L2c+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTgsMjkpIHNjYWxlKDEuMzgpIiBmaWx0ZXI9InVybCgjc29mdFNoYWRvdykiPgogICAgPHBhdGggZD0iTTIsMTIgTDIsMjQgTDI4LDI0IEwyOCwxMyBMMTMsMTMgTDEwLDEwIEwyLDEwIFoiIGZpbGw9InVybCgjZm9sZGVyRnJvbnRCbHVlKSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8L2c+CiAgPHBhdGggZD0iTTQyLDU1IEw1Miw1NSIgc3Ryb2tlPSIjOEIzMjI2IiBzdHJva2Utd2lkdGg9IjAuOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+CiAgPHBhdGggZD0iTTUyLDUxIEw1OCw1NSBMNTIsNTkiIHN0cm9rZT0iIzhCMzIyNiIgc3Ryb2tlLXdpZHRoPSIwLjkiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<style>
+  :root {
+    --font: 'Palatino Linotype', 'Book Antiqua', Palatino, 'URW Palladio L', 'Palatino LT STD', Georgia, serif;
+    --paper: #EDEBE2;
+    --paper-raised: #F5F3EA;
+    --ink: #1F2421;
+    --ink-soft: #4A4F49;
+    --ledger-green: #1B4D3E;
+    --cta-green: #2D7DA6;
+    --cta-green-hover: #205C7C;
+    --ledger-green-light: #EAF0EC;
+    --stamp-red: #A13D2C;
+    --mustard: #C98A2C;
+    --orange: #C1611E;
+    --navy: #2C4A6E;
+    --light-purple: #7A5C99;
+    --rule: #C9C2AE;
+    --rule-strong: #A9A18A;
+    --radius-lg: 20px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  /* --- Device preview toggle --- */
+  .preview-toggle {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--ink);
+  }
+  .preview-toggle-btn {
+    background: transparent;
+    border: 1.5px solid var(--paper);
+    color: var(--paper);
+    font-family: var(--font);
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .preview-toggle-btn.active {
+    background: var(--cta-green);
+    border-color: var(--cta-green);
+  }
+  .preview-toggle-btn:hover:not(.active) { border-color: var(--cta-green); color: var(--cta-green); }
+
+  #page-frame { transition: opacity 0.15s ease; }
+
+  .mobile-frame-wrap {
+    display: none;
+    justify-content: center;
+    padding: 24px 0;
+    background: #2A2A28;
+    min-height: calc(100vh - 44px);
+  }
+  .mobile-frame-wrap.active { display: flex; }
+  .mobile-frame {
+    width: 390px;
+    max-width: 92vw;
+    height: calc(100vh - 92px);
+    border: 10px solid var(--ink);
+    border-radius: 34px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+    background: var(--paper);
+  }
+  .mobile-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(31,36,33,0.16) 1px, transparent 0) 0 0/4px 4px,
+      radial-gradient(circle at 3px 3px, rgba(31,36,33,0.10) 1.2px, transparent 0) 0 0/7px 7px,
+      var(--paper);
+    color: var(--ink);
+    font-family: var(--font);
+    line-height: 1.6;
+  }
+
+  a { color: inherit; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  /* --- Nav --- */
+  nav {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+    position: sticky;
+    top: 44px;
+    z-index: 10;
+  }
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+  }
+  .logo-mark { height: 30px; display: block; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a:not(:last-child) { margin-right: 28px; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .nav-links a:hover { color: var(--ledger-green); }
+  .nav-cta {
+    background: var(--cta-green);
+    color: var(--paper) !important;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 20px;
+    border-radius: var(--radius-md);
+  }
+  .nav-cta:hover { background: var(--cta-green-hover); }
+
+  .ink-bar { display: flex; height: 4px; }
+  .ink-bar span { flex: 1; }
+
+  /* --- Hero --- */
+  header.hero {
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  header.hero {
+    position: relative;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 25px,
+      var(--rule-strong) 26px
+    );
+    background-position: 0 8px;
+  }
+  header.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom, var(--paper) 0%, rgba(237,235,226,0) 60%, var(--paper) 100%);
+    pointer-events: none;
+  }
+  .hero-icon { margin-bottom: 20px; }
+  .hero-icon svg { display: block; }
+  .eyebrow {
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ledger-green);
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--stamp-red);
+    border-radius: 50%;
+  }
+  h1 {
+    font-weight: 700;
+    font-size: clamp(30px, 5.5vw, 46px);
+    line-height: 1.18;
+    margin: 0 0 20px;
+    max-width: 24ch;
+  }
+  .sub { font-size: 18px; color: var(--ink-soft); max-width: 54ch; margin: 0 0 14px; }
+  .sub-list {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 0;
+  }
+  .sub-list li {
+    font-size: 18px;
+    color: var(--ink-soft);
+    padding-left: 26px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .sub-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--ledger-green);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .cta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--cta-green);
+    color: var(--paper);
+    text-decoration: none;
+    padding: 20px 38px;
+    font-weight: 700;
+    font-size: 24px;
+    border-radius: var(--radius-md);
+  }
+  .btn-primary:hover { background: var(--cta-green-hover); }
+  .cta-note { font-size: 14px; font-style: italic; color: var(--ink-soft); }
+
+  /* --- Signature ledger strip --- */
+  .ledger-strip {
+    margin: 44px 0 0;
+    border: 1px solid var(--rule-strong);
+    background: var(--paper-raised);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .ledger-strip .row {
+    display: grid;
+    grid-template-columns: 1fr 32px 1fr;
+    align-items: center;
+    font-size: 14px;
+  }
+  .ledger-strip .row + .row { border-top: 1px solid var(--rule); }
+  .ledger-strip .label-row {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 12px;
+    font-style: italic;
+    padding: 8px 16px;
+  }
+  .ledger-strip .cell { padding: 12px 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ledger-strip .cell.before { color: var(--ink-soft); }
+  .ledger-strip .cell.after { color: var(--ledger-green); font-weight: 700; background: var(--ledger-green-light); }
+  .arrow { text-align: center; color: var(--rule-strong); font-size: 16px; }
+
+  /* --- Sections --- */
+  section { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+  .section-label {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+  }
+  h2 { font-size: 27px; margin: 0 0 16px; }
+
+  .pain-list { list-style: none; margin: 0; padding: 0; }
+  .pain-list li {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px dotted var(--rule-strong);
+    font-size: 16px;
+    align-items: flex-start;
+  }
+  .pain-list li:last-child { border-bottom: none; }
+  .pain-list .mark {
+    color: var(--paper);
+    background: var(--stamp-red);
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .spec-grid div.spec-tile {
+    background: var(--paper-raised);
+    border-left: 4px solid var(--ledger-green);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+  }
+  .spec-grid .k {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .spec-grid .v { font-size: 15px; color: var(--ledger-green); font-weight: 700; }
+
+  /* --- Pricing tiles (clickable) --- */
+  .tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 8px;
+  }
+  .tile {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 3.5px solid var(--rule-strong);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .tile:hover, .tile:focus-visible {
+    transform: translateY(-5px);
+    border-color: var(--tile-color);
+    box-shadow: 0 16px 32px -12px var(--tile-shadow);
+    outline: none;
+  }
+  .tile-red { --tile-color: var(--ledger-green); --tile-shadow: rgba(27,77,62,0.4); }
+  .tile-mustard { --tile-color: #2E7455; --tile-shadow: rgba(46,116,85,0.4); }
+  .tile-green { --tile-color: #4C8C6B; --tile-shadow: rgba(76,140,107,0.4); }
+
+  .tile-badge {
+    display: inline-block;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--tile-color);
+    border: 1.5px solid var(--tile-color);
+    padding: 6px 16px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    line-height: 1.35;
+    margin-bottom: 18px;
+  }
+  .tile-price {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--tile-color);
+    line-height: 1;
+  }
+  .tile-price span { font-size: 18px; font-weight: 500; }
+  .tile-name { font-weight: 700; font-size: 21px; margin: 12px 0 4px; }
+  .tile-desc { font-size: 16px; color: var(--ink-soft); margin-bottom: 20px; }
+  .tile-cta {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--tile-color);
+  }
+  .tile-cta::after { content: " →"; }
+
+  .stamp {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 4px 12px;
+    border: 2px solid var(--stamp-red);
+    color: var(--stamp-red);
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 700;
+    transform: rotate(-2deg);
+    border-radius: var(--radius-md);
+  }
+
+  footer {
+    padding: 40px 0 60px;
+    text-align: center;
+  }
+  footer .logo-mark { margin: 0 auto 16px; }
+  footer p { font-size: 13px; font-style: italic; color: var(--ink-soft); }
+
+  @media (max-width: 640px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .spec-grid { grid-template-columns: repeat(2, 1fr); }
+    .tiles-grid { grid-template-columns: 1fr; }
+    .ledger-strip .row { grid-template-columns: 1fr 20px 1fr; font-size: 12px; }
+    .ledger-strip .cell { padding: 10px 8px; }
+    h1 { font-size: 26px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="preview-toggle">
+  <button type="button" class="preview-toggle-btn active" data-mode="desktop">Desktop view</button>
+  <button type="button" class="preview-toggle-btn" data-mode="mobile">Mobile view</button>
+</div>
+
+<div class="mobile-frame-wrap" id="mobile-frame-wrap">
+  <div class="mobile-frame">
+    <iframe id="mobile-iframe" title="Mobile preview of this page"></iframe>
+  </div>
+</div>
+
+<div id="page-frame">
+<nav>
+  <div class="wrap">
+    <svg class="logo-mark" viewBox="0 0 420 100" style="height:26px;" role="img" aria-label="SettleMod">
+      <defs>
+        <linearGradient id="folderFrontRed-nav" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8B3226"/>
+          <stop offset="100%" stop-color="#6B2318"/>
+        </linearGradient>
+        <linearGradient id="folderFrontBlue-nav" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1F5A78"/>
+          <stop offset="100%" stop-color="#14425A"/>
+        </linearGradient>
+        <filter id="softShadow-nav" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000" flood-opacity="0.25"/>
+        </filter>
+      </defs>
+      <g transform="translate(2,29) scale(1.38)" filter="url(#softShadow-nav)">
+        <path d="M2,12 L2,24 L28,24 L28,13 L13,13 L10,10 L2,10 Z" fill="url(#folderFrontRed-nav)" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+      </g>
+      <g transform="translate(58,29) scale(1.38)" filter="url(#softShadow-nav)">
+        <path d="M2,12 L2,24 L28,24 L28,13 L13,13 L10,10 L2,10 Z" fill="url(#folderFrontBlue-nav)" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+      </g>
+      <path d="M42,55 L52,55" stroke="#8B3226" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+      <path d="M52,51 L58,55 L52,59" stroke="#8B3226" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="112" y="46" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="30" font-weight="700" fill="#1F2421">QB</text>
+      <text x="163" y="46" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="30" font-weight="700" fill="#1B4D3E">Convert</text>
+      <text x="113" y="68" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-style="italic" font-size="13" font-weight="500" fill="#4A4F49">Ready to import</text>
+    </svg>
+    <div class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="https://app.settlemod.app/" class="nav-cta">Convert a file</a>
+    </div>
+  </div>
+  <div class="ink-bar">
+    <span style="background:var(--stamp-red);"></span>
+    <span style="background:var(--mustard);"></span>
+    <span style="background:var(--ledger-green);"></span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-icon" aria-hidden="true">
+      <svg viewBox="0 40 100 26" width="405" height="105">
+        <defs>
+          <linearGradient id="folderFrontRed-hero" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8B3226"/>
+            <stop offset="100%" stop-color="#6B2318"/>
+          </linearGradient>
+          <linearGradient id="folderFrontBlue-hero" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1F5A78"/>
+            <stop offset="100%" stop-color="#14425A"/>
+          </linearGradient>
+          <filter id="softShadow-hero" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000" flood-opacity="0.25"/>
+          </filter>
+        </defs>
+        <g transform="translate(2,29) scale(1.38)" filter="url(#softShadow-hero)">
+          <path d="M2,12 L2,24 L28,24 L28,13 L13,13 L10,10 L2,10 Z" fill="url(#folderFrontRed-hero)" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+          <text x="15" y="20" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="3.4" font-weight="700" fill="#EDEBE2" stroke="#000000" stroke-width="0.6" paint-order="stroke fill" text-anchor="middle">PayPal</text>
+        </g>
+        <g transform="translate(58,29) scale(1.38)" filter="url(#softShadow-hero)">
+          <path d="M2,12 L2,24 L28,24 L28,13 L13,13 L10,10 L2,10 Z" fill="url(#folderFrontBlue-hero)" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+          <text x="15" y="20" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif" font-size="3.4" font-weight="700" fill="#EDEBE2" stroke="#000000" stroke-width="0.6" paint-order="stroke fill" text-anchor="middle">QuickBooks</text>
+        </g>
+        <path d="M42,55 L52,55" stroke="#8B3226" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+        <path d="M52,51 L58,55 L52,59" stroke="#8B3226" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+    <p class="eyebrow">SettleMod</p>
+    <h1>Your PayPal export.<br>QuickBooks-ready in one drop!</h1>
+    <p class="sub">QuickBooks Online rejects most bank CSVs on the first try. SettleMod turns a raw PayPal transaction export into the exact 3-column format QBO accepts:</p>
+    <ul class="sub-list">
+      <li>No remapping</li>
+      <li>No cleanup</li>
+      <li>No rejected uploads</li>
+    </ul>
+    <div class="cta-row">
+      <a href="https://app.settlemod.app/" class="btn-primary">Convert your first file free</a>
+      <span class="cta-note">No credit card required — just a quick email check</span>
+    </div>
+
+    <div class="ledger-strip">
+      <div class="row label-row">
+        <div>PayPal export</div>
+        <div></div>
+        <div>QBO import file</div>
+      </div>
+      <div class="row">
+        <div class="cell before">07/03/2026,Office Supply Co.,General Payment,Completed,USD,-89.99...</div>
+        <div class="arrow">→</div>
+        <div class="cell after">07/03/2026,Office Supply Co. General Payment,-89.99</div>
+      </div>
+    </div>
+    <span class="stamp" style="margin-top:14px; margin-left:2px;">Ready to import</span>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="wrap">
+    <p class="section-label">The problem</p>
+    <h2>The error message every bookkeeper knows</h2>
+    <ul class="pain-list">
+      <li><span class="mark">✕</span> "We can't upload this .CSV file because some of the columns aren't mapped correctly."</li>
+      <li><span class="mark">✕</span> PayPal's export has a dozen columns. QBO wants exactly three or four.</li>
+      <li><span class="mark">✕</span> Manually stripping currency symbols, fixing dates, and combining columns in Excel — every single month.</li>
+      <li><span class="mark">✕</span> One typo in the date format and the whole batch gets rejected.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="how-it-works">
+  <div class="wrap">
+    <p class="section-label">How it works</p>
+    <h2>Drop it in. Get an import-ready file back!</h2>
+    <p style="font-size:16px; color:var(--ink-soft); max-width:56ch;">SettleMod reads your PayPal export, reformats dates to MM/DD/YYYY, strips currency symbols and special characters, and writes a clean Date/Description/Amount CSV — built to QuickBooks Online's own published import spec.</p>
+    <div class="spec-grid" style="margin-top:28px;">
+      <div class="spec-tile"><div class="k">Format</div><div class="v">Date, Description, Amount</div></div>
+      <div class="spec-tile"><div class="k">Encoding</div><div class="v">UTF-8</div></div>
+      <div class="spec-tile"><div class="k">Date format</div><div class="v">MM/DD/YYYY</div></div>
+      <div class="spec-tile"><div class="k">Upload limit</div><div class="v">~350KB, auto-flagged</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <p class="section-label">Pricing</p>
+    <h2>Pay for what you need</h2>
+    <div class="tiles-grid">
+      <a href="https://app.settlemod.app/?plan=single" class="tile tile-red">
+        <span class="tile-badge">Pay as you go</span>
+        <div class="tile-price">$14</div>
+        <div class="tile-name">Single conversion</div>
+        <div class="tile-desc">One file, no commitment</div>
+        <span class="tile-cta">Get started</span>
+      </a>
+      <a href="https://app.settlemod.app/?plan=pack10" class="tile tile-mustard">
+        <span class="tile-badge">Best for<br>occasional use</span>
+        <div class="tile-price">$69</div>
+        <div class="tile-name">10-pack</div>
+        <div class="tile-desc">Credits never expire</div>
+        <span class="tile-cta">Get started</span>
+      </a>
+      <a href="https://app.settlemod.app/?plan=monthly" class="tile tile-green">
+        <span class="tile-badge">Best for regulars</span>
+        <div class="tile-price">$29<span>/mo</span></div>
+        <div class="tile-name">Unlimited monthly</div>
+        <div class="tile-desc">For bookkeepers doing this weekly</div>
+        <span class="tile-cta">Get started</span>
+      </a>
+    </div>
+    <div style="margin-top:32px; text-align:center;">
+      <a href="https://app.settlemod.app/" class="btn-primary">Start with a free conversion</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <svg class="logo-mark" viewBox="0 0 100 100" style="height:32px; opacity:0.6;" role="img" aria-label="">
+      <defs>
+        <linearGradient id="folderFrontRed-footer" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8B3226"/>
+          <stop offset="100%" stop-color="#6B2318"/>
+        </linearGradient>
+        <linearGradient id="folderFrontBlue-footer" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1F5A78"/>
+          <stop offset="100%" stop-color="#14425A"/>
+        </linearGradient>
+        <filter id="softShadow-footer" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000" flood-opacity="0.25"/>
+        </filter>
+      </defs>
+      <g transform="translate(2,29) scale(1.38)" filter="url(#softShadow-footer)">
+        <path d="M2,12 L2,24 L28,24 L28,13 L13,13 L10,10 L2,10 Z" fill="url(#folderFrontRed-footer)" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+      </g>
+      <g transform="translate(58,29) scale(1.38)" filter="url(#softShadow-footer)">
+        <path d="M2,12 L2,24 L28,24 L28,13 L13,13 L10,10 L2,10 Z" fill="url(#folderFrontBlue-footer)" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+      </g>
+      <path d="M42,55 L52,55" stroke="#8B3226" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+      <path d="M52,51 L58,55 L52,59" stroke="#8B3226" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <p>Files are processed and discarded by default — you can choose to keep a copy of your original when converting.</p>
+    <p><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></p>
+    <p style="font-size:11px;">SettleMod is an independent tool, not affiliated with, endorsed by, or sponsored by PayPal or Intuit. PayPal and QuickBooks are trademarks of their respective owners.</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+  var toggleButtons = document.querySelectorAll('.preview-toggle-btn');
+  var pageFrame = document.getElementById('page-frame');
+  var mobileWrap = document.getElementById('mobile-frame-wrap');
+  var mobileIframe = document.getElementById('mobile-iframe');
+
+  for (var i = 0; i < toggleButtons.length; i++) {
+    toggleButtons[i].addEventListener('click', function () {
+      for (var j = 0; j < toggleButtons.length; j++) {
+        toggleButtons[j].classList.remove('active');
+      }
+      this.classList.add('active');
+
+      if (this.getAttribute('data-mode') === 'mobile') {
+        if (!mobileIframe.src) {
+          mobileIframe.src = window.location.href.split('#')[0];
+        }
+        pageFrame.style.display = 'none';
+        mobileWrap.classList.add('active');
+      } else {
+        mobileWrap.classList.remove('active');
+        pageFrame.style.display = '';
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

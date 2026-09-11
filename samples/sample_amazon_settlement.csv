@@ -1,0 +1,11 @@
+settlement-id	settlement-start-date	settlement-end-date	deposit-date	total-amount	currency	transaction-type	order-id	merchant-order-id	adjustment-id	shipment-id	marketplace-name	fulfillment-id	posted-date	order-item-code	merchant-order-item-id	sku	quantity-purchased	promotion-id	amount-type	amount-description	amount
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Order	111-1234567-1234567				Amazon.com		09/02/2026	A1B2C3		SKU-001	1		ItemPrice	Principal	50.00
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Order	111-1234567-1234567				Amazon.com		09/02/2026	A1B2C3		SKU-001	1		ItemPrice	Shipping	5.00
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Order	111-1234567-1234567				Amazon.com		09/02/2026	A1B2C3		SKU-001	1		ItemFees	Commission	-7.50
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Order	111-1234567-1234567				Amazon.com	FBA15X	09/02/2026	A1B2C3		SKU-001	1		ItemFees	FBAPerUnitFulfillmentFee	-3.20
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Order	112-2345678-2345678				Amazon.com		09/03/2026	B4C5D6		SKU-002	1		ItemPrice	Principal	30.00
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Order	112-2345678-2345678				Amazon.com		09/03/2026	B4C5D6		SKU-002	1		ItemFees	Commission	-4.50
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Order	112-2345678-2345678				Amazon.com	FBA15X	09/03/2026	B4C5D6		SKU-002	1		ItemFees	FBAPerUnitFulfillmentFee	-3.20
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Refund	111-1234567-1234567	111-1234567-1234567			Amazon.com		09/05/2026	A1B2C3		SKU-001	1		ItemPrice	Principal	-10.00
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	Refund	111-1234567-1234567	111-1234567-1234567			Amazon.com		09/05/2026	A1B2C3		SKU-001	1		ItemFees	RefundCommission	1.50
+24681012141	09/01/2026	09/08/2026	09/09/2026	45.35	USD	ServiceFee					Amazon.com		09/08/2026						ServiceFee	StorageFee	-12.75

@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# App runtime data (per-machine, not source)
+*.db
+
+# OS cruft
+.DS_Store
+
+# Scratch
+_to_delete/
+
+# Original Amazon settlement files a user opts to keep (real financial/customer data - never commit)
+uploads/
