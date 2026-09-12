@@ -1,5 +1,7 @@
 # SettleMod — Amazon Settlement Report → QuickBooks Online journal entry CSV
 
+<!-- auto-deploy test: 2026-09-12 -->
+
 v1: a working converter with real credit tracking, Stripe payments, and
 email verification wired in — one free trial conversion per email, then
 pay-per-use, a 10-pack, or an unlimited monthly subscription.
