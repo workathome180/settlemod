@@ -447,6 +447,7 @@ def create_checkout_session(email):
         line_items=[{"price": PRICE_IDS[plan], "quantity": 1}],
         mode=mode,
         customer_email=email,
+        allow_promotion_codes=True,
         metadata={"plan": plan, "email": email, "app": APP_NAME},
         success_url=request.host_url + "?checkout=success",
         cancel_url=request.host_url + "?checkout=cancelled",
