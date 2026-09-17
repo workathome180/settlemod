@@ -45,6 +45,7 @@ Stripe setup checklist (do this before going live):
   4. For local testing: `stripe listen --forward-to localhost:5000/webhook`
 """
 
+import base64
 import io
 import os
 import secrets
@@ -230,6 +231,50 @@ def send_verification_email(email, code):
         raise RuntimeError(f"SendGrid API error {e.code}: {e.read().decode('utf-8', 'ignore')}") from e
 
 
+def send_conversion_email(email, filename, csv_text):
+    """Email the converted QBO file to `email` as an attachment, so it's easy to
+    find later without digging through browser downloads. Best-effort: a
+    failure here must never block the actual conversion response, since the
+    file has already downloaded successfully in the browser regardless."""
+    api_key = os.environ.get("SENDGRID_API_KEY")
+    from_email = os.environ.get("SMTP_FROM", "no-reply@digitalbuilds.org")
+
+    if not api_key:
+        print(f"[DEV] would have emailed {filename} to {email} (SENDGRID_API_KEY not configured)")
+        return
+
+    payload = {
+        "personalizations": [{"to": [{"email": email}]}],
+        "from": {"email": from_email},
+        "subject": "Your SettleMod file is ready",
+        "content": [{
+            "type": "text/plain",
+            "value": "Your converted QuickBooks-ready file is attached, in case it's easier to find here than in your downloads.",
+        }],
+        "attachments": [{
+            "content": base64.b64encode(csv_text.encode("utf-8")).decode("ascii"),
+            "filename": filename,
+            "type": "text/csv",
+            "disposition": "attachment",
+        }],
+    }
+
+    req = urllib.request.Request(
+        "https://api.sendgrid.com/v3/mail/send",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        urllib.request.urlopen(req, timeout=10)
+    except Exception as e:
+        detail = e.read().decode("utf-8", "ignore") if isinstance(e, urllib.error.HTTPError) else str(e)
+        print(f"[WARN] Failed to email converted file to {email}: {detail}")
+
+
 def require_verified_email():
     """Pull the caller's verified email out of the `Authorization: Bearer <token>`
     header, issued by /verify-code. Returns the email on success, or None if the
@@ -413,6 +458,7 @@ def convert(email):
     db.deduct_credit(email)
     row_count = max(csv_text.count("\n") - 1, 0)  # minus header row
     db.log_conversion(email, uploaded.filename, row_count)
+    send_conversion_email(email, "qbo_journal_entries.csv", csv_text)
 
     buf = io.BytesIO(csv_text.encode("utf-8"))
     buf.seek(0)
