@@ -20,6 +20,7 @@
     --ledger-green: #1B4D3E;
     --ledger-green-light: #EAF0EC;
     --stamp-red: #A13D2C;
+    --highlight-blue: #1D4ED8;
     --cta-blue: #2D7DA6;
     --cta-blue-hover: #205C7C;
     --rule: #C9C2AE;
@@ -295,7 +296,8 @@
 
   .dropzone .instructions {
     font-size: 15px;
-    color: var(--ink-soft);
+    color: var(--highlight-blue);
+    font-weight: 600;
   }
 
   .dropzone .filename {
@@ -1131,7 +1133,7 @@
       convertBtn.disabled = false;
     } else {
       filenameEl.textContent = '';
-      instructions.textContent = 'Drop your Amazon Settlement Report export here, or click to browse';
+      instructions.textContent = 'Drop your Amazon Settlement Report export here, or click to browse — this uses 1 credit and gives you back a QuickBooks-ready file';
       convertBtn.disabled = true;
     }
     statusEl.textContent = '';
@@ -1205,6 +1207,15 @@
       document.body.appendChild(a);
       a.click();
       a.remove();
+
+      // Reset the dropzone back to its empty, ready-for-the-next-file state -
+      // otherwise the just-used file's name sits there looking like a stale/dead
+      // link even though the credit backing it is already spent.
+      selectedFile = null;
+      fileInput.value = '';
+      filenameEl.textContent = '';
+      instructions.textContent = 'Drop your Amazon Settlement Report export here, or click to browse — this uses 1 credit and gives you back a QuickBooks-ready file';
+      convertBtn.disabled = true;
 
       statusEl.textContent = usedTrial
         ? 'Converted using your free trial credit. Download started.'
