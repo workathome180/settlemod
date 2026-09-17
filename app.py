@@ -444,7 +444,7 @@ def convert(email):
 
     if not db.can_convert(email):
         return (
-            jsonify({"error": "No conversion credits remaining. Purchase more below."}),
+            jsonify({"error": "No conversion credits remaining. Purchase more above."}),
             402,
         )
 

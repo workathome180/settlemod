@@ -1223,11 +1223,16 @@
 
       if (!res.ok) {
         const err = await res.json();
+        if (res.status === 402) {
+          // Nothing more can happen with this file until credits are bought -
+          // leaving it "Selected" reads as a stuck/dead box rather than a
+          // clear invitation to go buy a plan. setFile(null) also clears
+          // statusEl, so it must run before the error message is set below.
+          setFile(null);
+          checkoutStatus.textContent = 'Pick a plan above to keep converting.';
+        }
         statusEl.textContent = 'Error: ' + err.error;
         statusEl.className = 'error';
-        if (res.status === 402) {
-          checkoutStatus.textContent = 'Pick a plan below to keep converting.';
-        }
         return;
       }
 
