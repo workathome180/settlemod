@@ -53,6 +53,7 @@ import json
 import smtplib
 import urllib.request
 import urllib.error
+import urllib.parse
 import time
 from collections import defaultdict, deque
 from datetime import datetime
@@ -195,24 +196,32 @@ def save_original(email, filename, file_bytes):
     return dest
 
 
-def send_verification_email(email, code):
-    """Email a 6-digit code to `email` via the SendGrid API (HTTPS), since this
-    host's outbound SMTP ports are blocked. Falls back to printing the code to
-    the console when SENDGRID_API_KEY isn't configured."""
+def send_verification_email(email, code, link):
+    """Email a verification link (with the code embedded, so clicking it
+    auto-verifies with no typing) to `email` via the SendGrid API (HTTPS),
+    since this host's outbound SMTP ports are blocked. The raw code is also
+    included as a fallback for email clients that strip query strings from
+    links, or for verifying on a different device than the link opens on.
+    Falls back to printing both to the console when SENDGRID_API_KEY isn't
+    configured."""
     api_key = os.environ.get("SENDGRID_API_KEY")
     from_email = os.environ.get("SMTP_FROM", "no-reply@digitalbuilds.org")
 
     if not api_key:
-        print(f"[DEV] verification code for {email}: {code} (SENDGRID_API_KEY not configured)")
+        print(f"[DEV] verification link for {email}: {link} (code: {code}, SENDGRID_API_KEY not configured)")
         return
 
     payload = {
         "personalizations": [{"to": [{"email": email}]}],
         "from": {"email": from_email},
-        "subject": "Your SettleMod verification code",
+        "subject": "Verify your email for SettleMod",
         "content": [{
             "type": "text/plain",
-            "value": f"Your verification code is {code}.\n\nIf you didn't request this, you can ignore this email.",
+            "value": (
+                f"Click to verify your email:\n{link}\n\n"
+                f"Or enter this code on the page instead: {code}\n\n"
+                "This link/code expires in 10 minutes. If you didn't request this, you can ignore this email."
+            ),
         }],
     }
 
@@ -369,9 +378,10 @@ def request_code():
 
     code = f"{secrets.randbelow(1_000_000):06d}"
     receipt = _serializer.dumps({"email": email, "code": code})
+    link = f"{request.host_url}?verify_receipt={urllib.parse.quote(receipt)}&verify_code={code}"
 
     try:
-        send_verification_email(email, code)
+        send_verification_email(email, code, link)
     except Exception as e:
         return jsonify({"error": f"Could not send verification email: {e}"}), 502
 

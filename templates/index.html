@@ -985,6 +985,45 @@
     checkoutStatus.style.color = 'var(--ink-soft)';
   }
 
+  // Magic-link verification: /request-code emails a clickable link with the
+  // receipt+code embedded (the raw code is also in the email as a fallback),
+  // so most people never have to type anything - landing here with these
+  // params auto-submits the same /verify-code check the manual "Verify"
+  // button uses below.
+  (function autoVerifyFromLink() {
+    const params = new URLSearchParams(window.location.search);
+    const linkReceipt = params.get('verify_receipt');
+    const linkCode = params.get('verify_code');
+    if (!linkReceipt || !linkCode) return;
+
+    // Strip these from the URL immediately so refreshing or re-sharing the
+    // link afterward can't resubmit or leak the verification code.
+    window.history.replaceState({}, '', window.location.pathname + window.location.hash);
+
+    emailStatusEl.textContent = 'Verifying…';
+    emailStatusEl.className = '';
+    fetch('/verify-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ receipt: linkReceipt, code: linkCode }),
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'That link is invalid or has expired.');
+        setToken(data.token, data.email);
+        emailInput.value = data.email;
+        showVerified(data.email);
+        emailStatusEl.textContent = '';
+        emailStatusEl.className = '';
+        refreshBalance();
+      })
+      .catch((e) => {
+        showEmailEntry();
+        emailStatusEl.textContent = 'Error: ' + e.message;
+        emailStatusEl.className = 'error';
+      });
+  })();
+
   sendCodeBtn.addEventListener('click', async () => {
     const email = emailInput.value.trim();
     if (!email || !email.includes('@')) {
@@ -1011,7 +1050,7 @@
       }
       pendingReceipt = data.receipt;
       showCodeEntry();
-      emailStatusEl.textContent = `Code sent to ${email} — it expires in 10 minutes.`;
+      emailStatusEl.textContent = `Check ${email} for a verification link — just click it. (Or enter the code from that email below. Expires in 10 minutes.)`;
       emailStatusEl.className = '';
     } catch (e) {
       emailStatusEl.textContent = 'Something went wrong: ' + e.message;
